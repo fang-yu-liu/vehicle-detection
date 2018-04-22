@@ -42,25 +42,23 @@ def color_conversion(image, color_space):
     Perform color space conversion.
     
     Input:
-        image: input image in 'BGR' color space
+        image: input image in 'RGB' color space
         color_space: the color space for the output image
     Output:
         color_converted: the image in the given color space
     '''
     # apply color conversion if other than 'BGR'
-    if color_space != 'BGR':
-        if color_space == 'RGB':
-            color_converted = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        elif color_space == 'HSV':
-            color_converted = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    if color_space != 'RGB':
+        if color_space == 'HSV':
+            color_converted = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
         elif color_space == 'LUV':
-            color_converted = cv2.cvtColor(image, cv2.COLOR_BGR2LUV)
+            color_converted = cv2.cvtColor(image, cv2.COLOR_RGB2LUV)
         elif color_space == 'HLS':
-            color_converted = cv2.cvtColor(image, cv2.COLOR_BGR2HLS)
+            color_converted = cv2.cvtColor(image, cv2.COLOR_RGB2HLS)
         elif color_space == 'YUV':
-            color_converted = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
+            color_converted = cv2.cvtColor(image, cv2.COLOR_RGB2YUV)
         elif color_space == 'YCrCb':
-            color_converted = cv2.cvtColor(image, cv2.COLOR_BGR2YCrCb)
+            color_converted = cv2.cvtColor(image, cv2.COLOR_RGB2YCrCb)
     else: 
         color_converted = np.copy(image)  
     return color_converted
@@ -111,6 +109,24 @@ def single_img_features(image, color_space='RGB', spatial_size=(32, 32),
                         hist_bins=32, orient=9, 
                         pix_per_cell=8, cell_per_block=2, hog_channel=0,
                         spatial_feat=True, hist_feat=True, hog_feat=True):
+    '''
+    Perform feature extraction.
+    
+    Input:
+        image: input image in 'RGB' color space
+        color_space: the color space for the output image
+        spatial_size: see bin_spatial
+        hist_bins: see color_hist
+        orient: see get_hog_features
+        pix_per_cell: see get_hog_features
+        cell_per_block: see get_hog_features
+        hog_channel: see get_hog_features
+        spatial_feat: whether to perform spatial spinning
+        hist_feat: whether to perfom color histogram extraction
+        hog_feat: whether to perform hog feature extraction
+    Output:
+        features: the extracted features
+    '''
     img_features = []
     # apply color conversion
     feature_image = color_conversion(image, color_space=color_space)     
@@ -144,13 +160,33 @@ def extract_features(filenames, color_space='RGB', spatial_size=(32, 32),
                      hist_bins=32, orient=9, 
                      pix_per_cell=8, cell_per_block=2, hog_channel=0,
                      spatial_feat=True, hist_feat=True, hog_feat=True):
+    '''
+    Perform feature extraction on a list of image filenames.
+    
+    Input:
+        image: images filenames
+        color_space: see single_img_features
+        spatial_size: see single_img_features
+        hist_bins: see single_img_features
+        orient: see single_img_features
+        pix_per_cell: see single_img_features
+        cell_per_block: see single_img_features
+        hog_channel: see single_img_features
+        spatial_feat: see single_img_features
+        hist_feat: see single_img_features
+        hog_feat: see single_img_features
+    Output:
+        features: the extracted features
+    '''
     # Create a list to append feature vectors to
     features = []
     # Iterate through the list of images
     for filename in filenames:
         # Read in each one by one using cv2.imread() -> the decoded color channel will be in BGR order
         image = cv2.imread(filename) 
-        file_features = single_img_features(image, color_space=color_space, spatial_size=spatial_size,
+        # Conver to RGB color space
+        rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
+        file_features = single_img_features(rgb_image, color_space=color_space, spatial_size=spatial_size,
                                            hist_bins=hist_bins, orient=orient,
                                            pix_per_cell=pix_per_cell, cell_per_block=cell_per_block, hog_channel=hog_channel,
                                            spatial_feat=spatial_feat, hist_feat=hist_feat, hog_feat=hog_feat)
