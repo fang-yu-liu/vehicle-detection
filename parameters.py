@@ -10,9 +10,10 @@ HIST_FEAT = True # Histogram features on or off
 HOG_FEAT = True # HOG features on or off
 
 X_START_STOP = [200, None]
-Y_START_STOP = [380, None] # Min and max in y to search in slide_window()
+Y_START_STOP = [380, 600] # Min and max in y to search in slide_window()
 XY_WINDOW = (64, 64)
 XY_OVERLAP = (0.5, 0.5)
+HEAT_THRESH = 30
 
 SAVE_MODEL= True
 MODEL_FILE = "./model.p"
