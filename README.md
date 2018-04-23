@@ -1,6 +1,7 @@
-**Vehicle Detection Project**
+# Vehicle Detection Project
+[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
-Detect vehicles using Histogram of Oriented Gradients (HOG) and Support Vector Machine (SVM) Classifier with sliding window technique.
+Detect vehicles using Histogram of Oriented Gradients (HOG) features and Support Vector Machine (SVM) Classifier with sliding window technique.
 This project is part of the [Udacity Self-Driving Car Nanodegree](https://www.udacity.com/drive) program, and some of the code are leveraged from the lecture materials.
 
 The goals / steps of this project are the following:
@@ -59,17 +60,10 @@ I chose the linear SVM as my classifier. The code for training the model is in `
 In the `train()` function, I first extract the features from all the vehicle and non-vehicle images. The code for extracting the features is in `extract_features()` function in `features.py` (line 157 through 195).
 
 Feature extraction:
-1. Color conversion
-  * COLOR_SPACE = 'YUV'
-2. Spatial binning
-  * SPATIAL_SIZE = (32, 32)
-3. Color histogram
-  * HIST_BINS = 32
-4. Hog features
-  * ORIENT = 12
-  * PIX_PER_CELL = 8
-  * CELL_PER_BLOCK = 2
-  * HOG_CHANNEL = 'ALL'
+1. Color conversion (COLOR_SPACE = 'YUV')
+2. Spatial binning (SPATIAL_SIZE = (32, 32))
+3. Color histogram (HIST_BINS = 32)
+4. Hog features (ORIENT = 12, PIX_PER_CELL = 8, CELL_PER_BLOCK = 2, HOG_CHANNEL = 'ALL')
 
 The parameters for those feature extraction are defined in `parameters.py`.
 
